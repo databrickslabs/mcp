@@ -26,7 +26,9 @@ jobs:
         id: set-matrix
         run: |
           dirs=$(find servers -mindepth 1 -maxdepth 1 -type d -exec test -d "{}/tests" \; -print | sed 's|servers/||' | jq -R . | jq -s .)
-          echo "server_dirs=${dirs}" >> $GITHUB_OUTPUT
+          echo "Found directories: $dirs"
+          printf "server_dirs=%s\n" "$dirs" >> "$GITHUB_OUTPUT"
+
 
   test:
     needs: discover
@@ -77,4 +79,4 @@ jobs:
           echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
       - name: Run lint checks
-        run: ./lint.sh
+        run: ./dev/lint.sh
