@@ -23,8 +23,9 @@ Genie spaces, as tools.
         "--directory",
         "/path/to/this/repo/servers/unity_catalog",
         "-s",
-        // Replace with the name of your Unity Catalog schema
-        "prod.genai" 
+        "prod.genai",
+        "-g",
+        "genie_space_name_1,genie_space_name_2"
       ]
     }
   }
