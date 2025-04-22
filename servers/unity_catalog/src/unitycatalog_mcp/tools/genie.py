@@ -290,8 +290,6 @@ class GenieTool(BaseTool):
         super().__init__(tool_spec)
 
     def execute(self, **kwargs):
-        # final_kwargs = {"client": WorkspaceClient()}
-        # final_kwargs.update(kwargs)
         return self.func(client=WorkspaceClient(), args=kwargs)
 
 

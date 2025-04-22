@@ -64,3 +64,15 @@ def test_internal_list_vector_search_tools_direct():
         tools = _list_vector_search_tools(client, "cat", "sch")
         assert len(tools) == 1
         assert tools[0].tool_obj.index_name == "cat.sch.tbl1"
+
+
+def test_vector_search_tool_execute():
+    tool_obj = mock.Mock()
+    tool_obj.tool = {
+        "function": {"name": "vs_tool", "description": "", "parameters": {}}
+    }
+    tool_obj.execute.return_value = [{"foo": "bar"}]
+    tool = VectorSearchTool(tool_obj)
+    result = tool.execute(query="test")
+    assert isinstance(result, list)
+    assert result[0].text == '{"foo": "bar"}'

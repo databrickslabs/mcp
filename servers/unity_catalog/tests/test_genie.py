@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from unitycatalog_mcp.tools.genie import list_genie_tools, GenieTool, dump_json
+from unittest import mock
 
 
 class DummySettings:
@@ -51,3 +52,12 @@ def test_dump_json_model():
     # ensure JSON string contains the fields
     assert '"a":5' in result
     assert '"b":"hello"' in result
+
+
+def test_genie_tool_execute():
+    mock_func = mock.Mock()
+    mock_func.return_value = [mock.Mock(text="hello world")]
+    tool = GenieTool("foo", "desc", {"type": "object", "properties": {}}, mock_func)
+    result = tool.execute()
+    assert isinstance(result, list)
+    assert result[0].text == "hello world"

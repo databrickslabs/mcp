@@ -29,7 +29,12 @@ class DummyToolkit:
 
 
 class DummyClient:
-    pass
+    def execute_function(self, function_name, parameters):
+        class Result:
+            value = f"executed {function_name} with parameters {parameters}"
+            error = None
+
+        return Result()
 
 
 class DummySettings:
@@ -47,3 +52,11 @@ def test_list_uc_function_tools():
     assert all(isinstance(t, UCFunctionTool) for t in tools)
     orig_uc_names = {t.uc_function_name for t in tools}
     assert orig_uc_names == {"catalog.schema.func1", "catalog.schema.func2"}
+
+
+def test_uc_function_tool_execute():
+    dummy_client = DummyClient()
+    dummy_func = {"function": {"name": "foo", "description": "bar", "parameters": {}}}
+    tool = UCFunctionTool(dummy_func, dummy_client, "foo")
+    output = tool.execute(x=1)
+    assert output[0].text == "executed foo with parameters {'x': 1}"
