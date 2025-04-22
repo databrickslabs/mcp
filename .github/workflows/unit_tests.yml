@@ -56,7 +56,7 @@ jobs:
 
       - name: Install dependencies with uv
         working-directory: servers/${{ matrix.server-dir }}
-        run: uv pip install --dev
+        run: uv sync
 
       - name: Run tests
         working-directory: servers/${{ matrix.server-dir }}
