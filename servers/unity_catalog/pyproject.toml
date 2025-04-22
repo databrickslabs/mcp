@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "An MCP (Model Context Protocol) server for retrieving data and executing functions in Unity Catalog."
 readme = "README.md"
 requires-python = ">=3.10"
-keywords = ["unity catalog", "mcp", "agents", "llm", "automation"]
+keywords = ["databricks", "unity catalog", "mcp", "agents", "llm", "automation", "genie"]
 license = { text = "Databricks License" }
 classifiers = [
     "Development Status :: 4 - Beta",
