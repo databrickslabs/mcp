@@ -1,11 +1,15 @@
 import sys
 from traceback import format_exc
 from unitycatalog_mcp.server import start
+from unitycatalog_mcp.version import VERSION
+
 from databricks.sdk.config import with_user_agent_extra
+
 
 def main() -> None:
     import asyncio
-    with_user_agent_extra("unitycatalog-mcp")
+
+    with_user_agent_extra(key="unitycatalog-mcp", value=VERSION)
     asyncio.run(start())
 
 
