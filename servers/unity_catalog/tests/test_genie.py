@@ -54,6 +54,11 @@ def test_dump_json_model():
     assert '"b":"hello"' in result
 
 
+class DummyWorkspaceClient:
+    pass
+
+
+@mock.patch("unitycatalog_mcp.tools.genie.WorkspaceClient", new=DummyWorkspaceClient)
 def test_genie_tool_execute():
     mock_func = mock.Mock()
     mock_func.return_value = [mock.Mock(text="hello world")]
