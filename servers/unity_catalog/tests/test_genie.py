@@ -21,6 +21,7 @@ def test_list_genie_tools_names_and_types():
         "genie_get_message",
         "genie_generate_download",
         "genie_poll_until_complete",
+        "genie_list_spaces",
     }
     assert expected.issubset(names)
 

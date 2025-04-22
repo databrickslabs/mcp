@@ -5,6 +5,26 @@ We happily welcome contributions to the MCP servers in this repo. We use GitHub 
 For new feature requests or contributions (e.g. adding a new server), please file an issue or reach out [via Slack](https://databricks.enterprise.slack.com/archives/C065NC65Q9F) to facilitate initial discussion,
 before sending a pull request
 
+### Running tests
+
+First, install test requirements from within the directory of the server you're working on:
+
+```bash
+uv sync
+uv pip install --group dev
+```
+
+To run tests:
+
+```bash
+uv run pytest tests
+```
+
+To run and fix lint errors, run the following from the repo root directory:
+```bash
+./dev/lint.sh --fix
+```
+
 ### Guidelines for MCP servers
 
 For consistency, MCP servers in this repo:

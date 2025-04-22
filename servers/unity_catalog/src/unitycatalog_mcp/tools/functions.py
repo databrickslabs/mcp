@@ -26,10 +26,12 @@ class UCFunctionTool(BaseTool):
         res = self.client.execute_function(
             function_name=self.uc_function_name, parameters=kwargs
         )
+        if res.error:
+            raise Exception(f"Error while executing {self.uc_function_name}: {res.error}")
         return [
             TextContent(
                 type="text",
-                text=res.value or res.error,
+                text=res.value,
             )
         ]
 

@@ -1,4 +1,6 @@
 from unittest import mock
+
+import pytest
 from unitycatalog_mcp.tools.functions import list_uc_function_tools, UCFunctionTool
 
 SCHEMA_FULL_NAME = "catalog.schema"
@@ -31,10 +33,14 @@ class DummyToolkit:
 class DummyClient:
     def execute_function(self, function_name, parameters):
         class Result:
-            value = f"executed {function_name} with parameters {parameters}"
-            error = None
+            def __init__(self, value, error):
+                self.value = value
+                self.error = error
+        if "required_parameter" not in parameters:
+            return Result(value=None, error="Missing required parameter 'required_parameter'")
+        return Result(value=f"executed {function_name} with parameters {parameters}", error=None)
 
-        return Result()
+
 
 
 class DummySettings:
@@ -58,5 +64,8 @@ def test_uc_function_tool_execute():
     dummy_client = DummyClient()
     dummy_func = {"function": {"name": "foo", "description": "bar", "parameters": {}}}
     tool = UCFunctionTool(dummy_func, dummy_client, "foo")
-    output = tool.execute(x=1)
-    assert output[0].text == "executed foo with parameters {'x': 1}"
+    output = tool.execute(required_parameter=1)
+    assert output[0].text == "executed foo with parameters {'required_parameter': 1}"
+    with pytest.raises(Exception) as excinfo:
+        tool.execute(x=3)
+    assert "Missing required parameter 'required_parameter'" in str(excinfo.value)

@@ -247,7 +247,7 @@ def _poll_message_until_complete(client, args) -> list[TextContent]:
             type="text",
             text=dump_json(
                 {
-                    "error": f"Timeout after {model.timeout_seconds} seconds",
+                    "error": f"Timeout after {elapsed} seconds",
                     "message_id": model.message_id,
                     "status": status,
                     "poll_count": poll_count,
