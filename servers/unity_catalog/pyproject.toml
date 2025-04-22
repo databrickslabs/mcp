@@ -1,5 +1,5 @@
 [project]
-name = "mcp-server-unitycatalog"
+name = "unitycatalog-mcp"
 version = "0.1.0"
 description = "An MCP (Model Context Protocol) server for retrieving data and executing functions in Unity Catalog."
 readme = "README.md"
@@ -22,7 +22,7 @@ dependencies = [
 ]
 
 [project.scripts]
-mcp-server-unitycatalog = "mcp_server_unitycatalog:main"
+unitycatalog-mcp = "unitycatalog_mcp:main"
 
 [build-system]
 requires = ["hatchling"]

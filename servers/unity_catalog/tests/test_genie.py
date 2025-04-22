@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from mcp_server_unitycatalog.tools.genie import list_genie_tools, GenieTool, dump_json
+from unitycatalog_mcp.tools.genie import list_genie_tools, GenieTool, dump_json
 import json
 
 class DummySettings:

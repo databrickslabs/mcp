@@ -1,14 +1,12 @@
 import logging
 import sys
 from traceback import format_exc
-from mcp_server_unitycatalog.cli import get_settings as Cli
-from mcp_server_unitycatalog.logging_config import configure_logging
-from mcp_server_unitycatalog.server import start
+from unitycatalog_mcp.cli import get_settings as Cli
+from unitycatalog_mcp.server import start
 
 
 def main() -> None:
     import asyncio
-    configure_logging()
     asyncio.run(start())
 
 

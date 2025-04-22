@@ -1292,43 +1292,6 @@ wheels = [
 ]
 
 [[package]]
-name = "mcp-server-unitycatalog"
-version = "0.1.0"
-source = { editable = "." }
-dependencies = [
-    { name = "databricks-openai" },
-    { name = "databricks-sdk" },
-    { name = "mcp" },
-    { name = "pydantic" },
-    { name = "pydantic-settings" },
-    { name = "unitycatalog-ai" },
-]
-
-[package.dev-dependencies]
-dev = [
-    { name = "pyright" },
-    { name = "pytest" },
-    { name = "ruff" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "databricks-openai", specifier = ">=0.3.1" },
-    { name = "databricks-sdk", specifier = ">=0.49.0" },
-    { name = "mcp", specifier = ">=1.2.1" },
-    { name = "pydantic", specifier = ">=2.10.6" },
-    { name = "pydantic-settings", specifier = ">=2.7.1" },
-    { name = "unitycatalog-ai", specifier = ">=0.1.0" },
-]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "pyright", specifier = ">=1.1.393" },
-    { name = "pytest", specifier = ">=8.3.4" },
-    { name = "ruff", specifier = ">=0.9.4" },
-]
-
-[[package]]
 name = "mlflow"
 version = "2.21.3"
 source = { registry = "https://pypi.org/simple" }
@@ -2592,6 +2555,43 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/ab/fc/b479fd3a932301745da7ed39aa25105e74fb1d917b8fd74fb82b495e667f/unitycatalog_client-0.2.1.tar.gz", hash = "sha256:4d4ccbf20e94d282627234c7ae6ffba2d401dad2e821edc3a14d950a075aefe7", size = 50960 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/9f/6a/3f1a8380134281bb31a0b8fa662da262d42dee984f78f5864b3ab5590cc3/unitycatalog_client-0.2.1-py3-none-any.whl", hash = "sha256:096e241c1597522c0a8d12f268942bd7ea85a1e5cafd17cc54dca00c42012cd7", size = 131784 },
+]
+
+[[package]]
+name = "unitycatalog-mcp"
+version = "0.1.0"
+source = { editable = "." }
+dependencies = [
+    { name = "databricks-openai" },
+    { name = "databricks-sdk" },
+    { name = "mcp" },
+    { name = "pydantic" },
+    { name = "pydantic-settings" },
+    { name = "unitycatalog-ai" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "pyright" },
+    { name = "pytest" },
+    { name = "ruff" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "databricks-openai", specifier = ">=0.3.1" },
+    { name = "databricks-sdk", specifier = ">=0.49.0" },
+    { name = "mcp", specifier = ">=1.2.1" },
+    { name = "pydantic", specifier = ">=2.10.6" },
+    { name = "pydantic-settings", specifier = ">=2.7.1" },
+    { name = "unitycatalog-ai", specifier = ">=0.1.0" },
+]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "pyright", specifier = ">=1.1.393" },
+    { name = "pytest", specifier = ">=8.3.4" },
+    { name = "ruff", specifier = ">=0.9.4" },
 ]
 
 [[package]]

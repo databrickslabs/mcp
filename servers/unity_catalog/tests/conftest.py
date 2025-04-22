@@ -2,7 +2,7 @@ import os
 import random
 import string
 import pytest
-from mcp_server_unitycatalog.cli import CliSettings, get_settings
+from unitycatalog_mcp.cli import CliSettings, get_settings
 
 
 def _random_alpha_num(length: int) -> str:

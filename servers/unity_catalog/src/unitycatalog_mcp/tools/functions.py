@@ -1,7 +1,7 @@
 import logging
 
 from mcp.types import Tool as ToolSpec, TextContent
-from mcp_server_unitycatalog.tools.base_tool import BaseTool
+from unitycatalog_mcp.tools.base_tool import BaseTool
 from unitycatalog.ai.core.databricks import DatabricksFunctionClient
 from databricks_openai import UCFunctionToolkit
 

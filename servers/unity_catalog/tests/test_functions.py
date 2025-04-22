@@ -1,6 +1,6 @@
 import pytest
 from unittest import mock
-from mcp_server_unitycatalog.tools.functions import list_uc_function_tools, _list_uc_function_tools, UCFunctionTool
+from unitycatalog_mcp.tools.functions import list_uc_function_tools, _list_uc_function_tools, UCFunctionTool
 
 # Dummy toolkit to replace UCFunctionToolkit
 class DummyToolkit:
@@ -18,8 +18,8 @@ class DummyClient:
 class DummySettings:
     schema_full_name = "catalog.schema"
 
-@mock.patch("mcp_server_unitycatalog.tools.functions.DatabricksFunctionClient", new_callable=lambda: DummyClient)
-@mock.patch("mcp_server_unitycatalog.tools.functions.UCFunctionToolkit", new=DummyToolkit)
+@mock.patch("unitycatalog_mcp.tools.functions.DatabricksFunctionClient", new_callable=lambda: DummyClient)
+@mock.patch("unitycatalog_mcp.tools.functions.UCFunctionToolkit", new=DummyToolkit)
 def test_list_uc_function_tools_calls_internal(mock_toolkit, mock_client):
     settings = DummySettings()
     tools = list_uc_function_tools(settings)

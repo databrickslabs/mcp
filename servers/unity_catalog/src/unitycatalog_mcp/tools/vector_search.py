@@ -7,7 +7,7 @@ from databricks.sdk import WorkspaceClient
 
 from mcp.types import Tool as ToolSpec, TextContent
 
-from mcp_server_unitycatalog.tools.base_tool import BaseTool
+from unitycatalog_mcp.tools.base_tool import BaseTool
 
 
 class VectorSearchTool(BaseTool):

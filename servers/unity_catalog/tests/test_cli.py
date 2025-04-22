@@ -3,7 +3,7 @@ import sys
 import pytest
 from pydantic import ValidationError
 from unittest.mock import patch
-from mcp_server_unitycatalog.cli import get_settings
+from unitycatalog_mcp.cli import get_settings
 
 
 def test_cache(server: str, catalog: str, schema: str) -> None:

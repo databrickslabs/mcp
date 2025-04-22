@@ -4,14 +4,14 @@ import collections
 from mcp.server import NotificationOptions, Server
 from mcp.server.stdio import stdio_server
 from mcp.types import Tool as ToolSpec
-from mcp_server_unitycatalog.tools import (
+from unitycatalog_mcp.tools import (
     list_all_tools,
     Content,
 )
 
-from mcp_server_unitycatalog.cli import get_settings
+from unitycatalog_mcp.cli import get_settings
 
-from mcp_server_unitycatalog.tools.base_tool import BaseTool
+from unitycatalog_mcp.tools.base_tool import BaseTool
 
 # The logger instance for this module.
 LOGGER = logging.getLogger(__name__)
@@ -52,6 +52,5 @@ async def start() -> None:
             resources_changed=True, tools_changed=True
         )
     )
-    LOGGER.info(f"start serving: options: {options}")
     async with stdio_server() as (read_stream, write_stream):
         await server.run(read_stream, write_stream, options, raise_exceptions=True)
