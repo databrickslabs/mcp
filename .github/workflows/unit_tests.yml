@@ -13,6 +13,7 @@ on:
 jobs:
   discover:
     runs-on: databrickslabs-protected-runner-group
+    labels: linux-ubuntu-latest
     outputs:
       server_dirs: ${{ steps.set-matrix.outputs.server_dirs }}
 
@@ -29,6 +30,7 @@ jobs:
   test:
     needs: discover
     runs-on: databrickslabs-protected-runner-group
+    labels: linux-ubuntu-latest
     strategy:
       matrix:
         server-dir: ${{ fromJson(needs.discover.outputs.server_dirs) }}
@@ -56,6 +58,7 @@ jobs:
         run: pytest tests
   lint:
     runs-on: databrickslabs-protected-runner-group
+    labels: linux-ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
