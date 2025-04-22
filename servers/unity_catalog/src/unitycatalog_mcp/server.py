@@ -16,7 +16,7 @@ from unitycatalog_mcp.tools.base_tool import BaseTool
 
 # The logger instance for this module.
 LOGGER = logging.getLogger(__name__)
-CURRENT_SERVER_VERSION = importlib.metadata.version('unitycatalog-mcp')
+CURRENT_SERVER_VERSION = importlib.metadata.version("unitycatalog-mcp")
 
 
 def _warn_if_duplicate_tool_names(tools: list[BaseTool]):
@@ -46,7 +46,7 @@ def get_tools_dict(settings) -> dict[str, BaseTool]:
 
 
 async def start() -> None:
-    server = Server(name=f"mcp-unitycatalog", version=CURRENT_SERVER_VERSION)
+    server = Server(name="mcp-unitycatalog", version=CURRENT_SERVER_VERSION)
     tools_dict = get_tools_dict(settings=get_settings())
 
     @server.list_tools()
