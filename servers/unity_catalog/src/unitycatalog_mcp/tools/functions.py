@@ -23,7 +23,9 @@ class UCFunctionTool(BaseTool):
         super().__init__(tool_spec=tool_spec)
 
     def execute(self, **kwargs) -> list[TextContent]:
-        res = self.client.execute_function(function_name=self.uc_function_name, parameters=kwargs)
+        res = self.client.execute_function(
+            function_name=self.uc_function_name, parameters=kwargs
+        )
         return [
             TextContent(
                 type="text",
@@ -31,13 +33,19 @@ class UCFunctionTool(BaseTool):
             )
         ]
 
+
 def _list_uc_function_tools(
-        client: DatabricksFunctionClient,
-        catalog_name: str,
-        schema_name: str,
+    client: DatabricksFunctionClient,
+    catalog_name: str,
+    schema_name: str,
 ) -> list[UCFunctionTool]:
-    toolkit = UCFunctionToolkit(client=client, function_names=[f"{catalog_name}.{schema_name}.*"])
-    return [UCFunctionTool(tool_obj, client, name) for name, tool_obj in toolkit.tools_dict.items()]
+    toolkit = UCFunctionToolkit(
+        client=client, function_names=[f"{catalog_name}.{schema_name}.*"]
+    )
+    return [
+        UCFunctionTool(tool_obj, client, name)
+        for name, tool_obj in toolkit.tools_dict.items()
+    ]
 
 
 def list_uc_function_tools(settings) -> list[UCFunctionTool]:

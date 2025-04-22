@@ -16,13 +16,19 @@ from unitycatalog_mcp.tools.base_tool import BaseTool
 # The logger instance for this module.
 LOGGER = logging.getLogger(__name__)
 
+
 def _warn_if_duplicate_tool_names(tools: list[BaseTool]):
     tool_names = [tool.tool_spec.name for tool in tools]
-    duplicate_tool_names = [item for item, count in collections.Counter(tool_names).items() if count > 1]
+    duplicate_tool_names = [
+        item for item, count in collections.Counter(tool_names).items() if count > 1
+    ]
     if duplicate_tool_names:
-        LOGGER.warning(f"Duplicate tool names detected: {duplicate_tool_names}. For each duplicate tool name, "
-                       f"picking one of the tools with that name. This can happen if your UC schema "
-                       f"contains a function and a vector search index with the same name")
+        LOGGER.warning(
+            f"Duplicate tool names detected: {duplicate_tool_names}. For each duplicate tool name, "
+            f"picking one of the tools with that name. This can happen if your UC schema "
+            f"contains a function and a vector search index with the same name"
+        )
+
 
 def get_tools_dict(settings) -> dict[str, BaseTool]:
     """
@@ -32,7 +38,10 @@ def get_tools_dict(settings) -> dict[str, BaseTool]:
     # (e.g. function name and vector search index name)
     all_tools = list_all_tools(settings=get_settings())
     _warn_if_duplicate_tool_names(all_tools)
-    return {tool.tool_spec.name: tool for tool in list_all_tools(settings=get_settings())}
+    return {
+        tool.tool_spec.name: tool for tool in list_all_tools(settings=get_settings())
+    }
+
 
 async def start() -> None:
     server = Server("mcp-unitycatalog")

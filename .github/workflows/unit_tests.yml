@@ -1,0 +1,74 @@
+name: Run Server Tests with uv
+
+on:
+  push:
+    paths:
+      - "servers/**"
+      - ".github/workflows/run-server-tests.yml"
+  pull_request:
+    paths:
+      - "servers/**"
+      - ".github/workflows/run-server-tests.yml"
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    outputs:
+      server_dirs: ${{ steps.set-matrix.outputs.server_dirs }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Discover server dirs with tests
+        id: set-matrix
+        run: |
+          dirs=$(find servers -mindepth 1 -maxdepth 1 -type d -exec test -d "{}/tests" \; -print | sed 's|servers/||' | jq -R . | jq -s .)
+          echo "server_dirs=${dirs}" >> $GITHUB_OUTPUT
+
+  test:
+    needs: discover
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        server-dir: ${{ fromJson(needs.discover.outputs.server_dirs) }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install uv (official install method)
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+      - name: Install dependencies with uv
+        working-directory: servers/${{ matrix.server-dir }}
+        run: uv pip install --dev
+
+      - name: Run tests
+        working-directory: servers/${{ matrix.server-dir }}
+        run: pytest tests
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+      - name: Run lint checks
+        run: ./lint.sh

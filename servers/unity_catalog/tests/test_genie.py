@@ -1,10 +1,10 @@
 from pydantic import BaseModel
 from unitycatalog_mcp.tools.genie import list_genie_tools, GenieTool, dump_json
-import json
+
 
 class DummySettings:
     # settings.genie_space_ids not used by list_genie_tools
-    genie_space_ids = ['s1', 's2']
+    genie_space_ids = ["s1", "s2"]
 
 
 def test_list_genie_tools_names_and_types():
@@ -42,7 +42,7 @@ def test_dump_json_dict():
 def test_dump_json_list():
     data = [1, 2, 3]
     result = dump_json(data)
-    assert result == '[1,2,3]'
+    assert result == "[1,2,3]"
 
 
 def test_dump_json_model():

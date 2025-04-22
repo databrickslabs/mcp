@@ -39,10 +39,13 @@ class VectorSearchTool(BaseTool):
                 for vs_res in res
             ]
 
-def _list_vector_search_tools(workspace_client: WorkspaceClient, catalog_name: str, schema_name: str) -> list[VectorSearchTool]:
+
+def _list_vector_search_tools(
+    workspace_client: WorkspaceClient, catalog_name: str, schema_name: str
+) -> list[VectorSearchTool]:
     tools = []
     for table in workspace_client.tables.list(
-            catalog_name=catalog_name, schema_name=schema_name
+        catalog_name=catalog_name, schema_name=schema_name
     ):
         # TODO: support filtering tables by securable kind (e.g. by making securable
         # kind accessible here)
@@ -51,6 +54,7 @@ def _list_vector_search_tools(workspace_client: WorkspaceClient, catalog_name: s
         tool_obj = VectorSearchRetrieverTool(index_name=table.full_name)
         tools.append(VectorSearchTool(tool_obj))
     return tools
+
 
 def list_vector_search_tools(settings) -> list[VectorSearchTool]:
     workspace_client = WorkspaceClient()

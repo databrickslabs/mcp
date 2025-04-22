@@ -1,4 +1,3 @@
-import sys
 from unitycatalog_mcp import main
 
 

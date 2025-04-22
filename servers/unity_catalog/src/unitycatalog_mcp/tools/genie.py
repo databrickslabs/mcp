@@ -2,13 +2,11 @@ import functools
 import time
 import json
 import logging
-from typing import Callable, Union, TypeAlias
+from typing import Union
 from pydantic import BaseModel, Field
 from pydantic.json import pydantic_encoder
 
 from databricks.sdk import WorkspaceClient
-from mcp.shared.context import RequestContext
-from mcp.server.session import ServerSession
 from mcp.types import TextContent, Tool as ToolSpec
 
 from unitycatalog_mcp.tools.base_tool import BaseTool
@@ -28,19 +26,23 @@ def dump_json(maybe_model: Union[BaseModel, list, dict, None]) -> str:
 
 # --- Input Schemas ---
 
+
 class StartConversationInput(BaseModel):
     space_id: str = Field(..., description="The ID of the Genie space.")
     content: str = Field(..., description="The text to start the conversation.")
+
 
 class CreateMessageInput(BaseModel):
     space_id: str
     conversation_id: str
     content: str
 
+
 class GetMessageInput(BaseModel):
     space_id: str
     conversation_id: str
     message_id: str
+
 
 class GetAttachmentQueryResultInput(BaseModel):
     space_id: str
@@ -48,14 +50,18 @@ class GetAttachmentQueryResultInput(BaseModel):
     message_id: str
     attachment_id: str
 
+
 class ExecuteAttachmentQueryInput(GetAttachmentQueryResultInput):
     pass
+
 
 class GetSpaceInput(BaseModel):
     space_id: str
 
+
 class GenerateDownloadInput(GetAttachmentQueryResultInput):
     pass
+
 
 class PollMessageUntilCompleteInput(BaseModel):
     space_id: str
@@ -64,83 +70,145 @@ class PollMessageUntilCompleteInput(BaseModel):
     timeout_seconds: int = Field(default=600)
     poll_interval_seconds: int = Field(default=5)
 
+
 class ListSpacesInput(BaseModel):
     pass
 
 
 # --- Tool Implementations ---
 
+
 def _start_conversation(client, args) -> list[TextContent]:
     model = StartConversationInput.model_validate(args)
     message = client.genie.start_conversation_and_wait(model.space_id, model.content)
-    return [TextContent(type="text", text=dump_json({
-        "conversation_id": message.conversation_id,
-        "message_id": message.message_id,
-        "content": message.content,
-        "status": message.status.value if message.status else None,
-        "attachments": getattr(message, 'attachments', None)
-    }))]
+    return [
+        TextContent(
+            type="text",
+            text=dump_json(
+                {
+                    "conversation_id": message.conversation_id,
+                    "message_id": message.message_id,
+                    "content": message.content,
+                    "status": message.status.value if message.status else None,
+                    "attachments": getattr(message, "attachments", None),
+                }
+            ),
+        )
+    ]
+
 
 def _create_message(client, args) -> list[TextContent]:
     model = CreateMessageInput.model_validate(args)
-    message = client.genie.create_message_and_wait(model.space_id, model.conversation_id, model.content)
-    return [TextContent(type="text", text=dump_json({
-        "message_id": message.message_id,
-        "content": message.content,
-        "status": message.status.value if message.status else None,
-        "attachments": getattr(message, 'attachments', None),
-        "conversation_id": message.conversation_id
-    }))]
+    message = client.genie.create_message_and_wait(
+        model.space_id, model.conversation_id, model.content
+    )
+    return [
+        TextContent(
+            type="text",
+            text=dump_json(
+                {
+                    "message_id": message.message_id,
+                    "content": message.content,
+                    "status": message.status.value if message.status else None,
+                    "attachments": getattr(message, "attachments", None),
+                    "conversation_id": message.conversation_id,
+                }
+            ),
+        )
+    ]
+
 
 def _get_message(client, args) -> list[TextContent]:
     model = GetMessageInput.model_validate(args)
-    message = client.genie.get_message(model.space_id, model.conversation_id, model.message_id)
-    return [TextContent(type="text", text=dump_json({
-        "message_id": message.message_id,
-        "content": message.content,
-        "status": message.status.value if message.status else None,
-        "conversation_id": message.conversation_id,
-        "space_id": model.space_id,
-        "attachments": getattr(message, 'attachments', None),
-        "error": getattr(message, 'error', None)
-    }))]
+    message = client.genie.get_message(
+        model.space_id, model.conversation_id, model.message_id
+    )
+    return [
+        TextContent(
+            type="text",
+            text=dump_json(
+                {
+                    "message_id": message.message_id,
+                    "content": message.content,
+                    "status": message.status.value if message.status else None,
+                    "conversation_id": message.conversation_id,
+                    "space_id": model.space_id,
+                    "attachments": getattr(message, "attachments", None),
+                    "error": getattr(message, "error", None),
+                }
+            ),
+        )
+    ]
+
 
 def _get_attachment_query_result(client, args) -> list[TextContent]:
     model = GetAttachmentQueryResultInput.model_validate(args)
     result = client.genie.get_message_attachment_query_result(
         model.space_id, model.conversation_id, model.message_id, model.attachment_id
     )
-    return [TextContent(type="text", text=dump_json(
-        result.statement_response.as_dict() if result.statement_response else {"error": "No statement response found."}
-    ))]
+    return [
+        TextContent(
+            type="text",
+            text=dump_json(
+                result.statement_response.as_dict()
+                if result.statement_response
+                else {"error": "No statement response found."}
+            ),
+        )
+    ]
+
 
 def _execute_attachment_query(client, args) -> list[TextContent]:
     model = ExecuteAttachmentQueryInput.model_validate(args)
     result = client.genie.execute_message_attachment_query(
         model.space_id, model.conversation_id, model.message_id, model.attachment_id
     )
-    return [TextContent(type="text", text=dump_json(
-        result.statement_response.as_dict() if result.statement_response else {"error": "No statement response found."}
-    ))]
+    return [
+        TextContent(
+            type="text",
+            text=dump_json(
+                result.statement_response.as_dict()
+                if result.statement_response
+                else {"error": "No statement response found."}
+            ),
+        )
+    ]
+
 
 def _get_space(client, args) -> list[TextContent]:
     model = GetSpaceInput.model_validate(args)
     space = client.genie.get_space(model.space_id)
-    return [TextContent(type="text", text=dump_json({
-        "space_id": model.space_id,
-        "title": space.title,
-        "description": getattr(space, 'description', None)
-    }))]
+    return [
+        TextContent(
+            type="text",
+            text=dump_json(
+                {
+                    "space_id": model.space_id,
+                    "title": space.title,
+                    "description": getattr(space, "description", None),
+                }
+            ),
+        )
+    ]
+
 
 def _generate_download_query_result(client, args) -> list[TextContent]:
     model = GenerateDownloadInput.model_validate(args)
     result = client.genie.generate_download_full_query_result(
         model.space_id, model.conversation_id, model.message_id, model.attachment_id
     )
-    return [TextContent(type="text", text=dump_json({
-        "transient_statement_id": result.transient_statement_id,
-        "status": result.status.value if result.status else None
-    }))]
+    return [
+        TextContent(
+            type="text",
+            text=dump_json(
+                {
+                    "transient_statement_id": result.transient_statement_id,
+                    "status": result.status.value if result.status else None,
+                }
+            ),
+        )
+    ]
+
 
 def _poll_message_until_complete(client, args) -> list[TextContent]:
     model = PollMessageUntilCompleteInput.model_validate(args)
@@ -150,44 +218,65 @@ def _poll_message_until_complete(client, args) -> list[TextContent]:
     poll_count = 0
 
     while elapsed < model.timeout_seconds:
-        message = genie_api.get_message(model.space_id, model.conversation_id, model.message_id)
+        message = genie_api.get_message(
+            model.space_id, model.conversation_id, model.message_id
+        )
         status = message.status.value if message.status else "UNKNOWN"
         poll_count += 1
 
         if status in ["COMPLETED", "FAILED", "QUERY_RESULT_EXPIRED", "CANCELLED"]:
-            return [TextContent(type="text", text=dump_json({
-                "message_id": message.message_id,
-                "status": status,
-                "poll_count": poll_count,
-                "elapsed_time": elapsed
-            }))]
+            return [
+                TextContent(
+                    type="text",
+                    text=dump_json(
+                        {
+                            "message_id": message.message_id,
+                            "status": status,
+                            "poll_count": poll_count,
+                            "elapsed_time": elapsed,
+                        }
+                    ),
+                )
+            ]
 
         time.sleep(model.poll_interval_seconds)
         elapsed = time.time() - start_time
 
-    return [TextContent(type="text", text=dump_json({
-        "error": f"Timeout after {model.timeout_seconds} seconds",
-        "message_id": model.message_id,
-        "status": status,
-        "poll_count": poll_count,
-        "elapsed_time": elapsed
-    }))]
+    return [
+        TextContent(
+            type="text",
+            text=dump_json(
+                {
+                    "error": f"Timeout after {model.timeout_seconds} seconds",
+                    "message_id": model.message_id,
+                    "status": status,
+                    "poll_count": poll_count,
+                    "elapsed_time": elapsed,
+                }
+            ),
+        )
+    ]
+
 
 def _list_spaces(client, args, space_ids) -> list[TextContent]:
     results = []
     for space_id in space_ids:
         try:
             space = client.genie.get_space(space_id)
-            results.append({
-                "space_id": space_id,
-                "title": space.title,
-                "description": getattr(space, 'description', None)
-            })
+            results.append(
+                {
+                    "space_id": space_id,
+                    "title": space.title,
+                    "description": getattr(space, "description", None),
+                }
+            )
         except Exception as e:
             results.append({"space_id": space_id, "error": str(e)})
     return [TextContent(type="text", text=dump_json(results))]
 
+
 # --- Tool Registry ---
+
 
 class GenieTool(BaseTool):
 

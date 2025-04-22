@@ -1,34 +1,46 @@
-import pytest
 from unittest import mock
-from unitycatalog_mcp.tools.vector_search import (_list_vector_search_tools,
-                                                  list_vector_search_tools,
-                                                  VectorSearchTool)
+from unitycatalog_mcp.tools.vector_search import (
+    _list_vector_search_tools,
+    list_vector_search_tools,
+    VectorSearchTool,
+)
+
 
 class DummyTable:
     def __init__(self, full_name, properties):
         self.full_name = full_name
         self.properties = properties
 
+
 class DummyTablesAPI:
     def list(self, catalog_name=None, schema_name=None):
         return [
-            DummyTable(full_name="cat.sch.tbl1", properties={"model_endpoint_url": "url1"}),
+            DummyTable(
+                full_name="cat.sch.tbl1", properties={"model_endpoint_url": "url1"}
+            ),
             DummyTable(full_name="cat.sch.tbl2", properties={}),
         ]
+
 
 class DummyWorkspaceClient:
     def __init__(self):
         self.tables = DummyTablesAPI()
 
+
 class DummySettings:
     schema_full_name = "cat.sch"
 
-@mock.patch("unitycatalog_mcp.tools.vector_search.WorkspaceClient", new=DummyWorkspaceClient)
+
+@mock.patch(
+    "unitycatalog_mcp.tools.vector_search.WorkspaceClient", new=DummyWorkspaceClient
+)
 @mock.patch("unitycatalog_mcp.tools.vector_search.VectorSearchRetrieverTool")
-def test_list_vector_search_tools_filters_and_returns_expected(MockVectorSearchRetrieverTool):
+def test_list_vector_search_tools_filters_and_returns_expected(
+    MockVectorSearchRetrieverTool,
+):
     MockVectorSearchRetrieverTool.side_effect = lambda index_name: mock.Mock(
         tool={"function": {"name": index_name, "description": "", "parameters": {}}},
-        index_name=index_name
+        index_name=index_name,
     )
     settings = DummySettings()
     tools = list_vector_search_tools(settings)
@@ -39,10 +51,14 @@ def test_list_vector_search_tools_filters_and_returns_expected(MockVectorSearchR
 
 
 def test_internal_list_vector_search_tools_direct():
-    with mock.patch("unitycatalog_mcp.tools.vector_search.VectorSearchRetrieverTool") as MockVectorSearchRetrieverTool:
+    with mock.patch(
+        "unitycatalog_mcp.tools.vector_search.VectorSearchRetrieverTool"
+    ) as MockVectorSearchRetrieverTool:
         MockVectorSearchRetrieverTool.side_effect = lambda index_name: mock.Mock(
-            tool={"function": {"name": index_name, "description": "", "parameters": {}}},
-            index_name=index_name
+            tool={
+                "function": {"name": index_name, "description": "", "parameters": {}}
+            },
+            index_name=index_name,
         )
         client = DummyWorkspaceClient()
         tools = _list_vector_search_tools(client, "cat", "sch")
