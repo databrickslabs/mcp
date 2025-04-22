@@ -1,4 +1,4 @@
-name: Run Server Tests with uv
+name: Tests and lint for MCP servers
 
 on:
   push:
