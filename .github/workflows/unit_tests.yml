@@ -20,14 +20,15 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Discover server dirs with tests
         id: set-matrix
         run: |
-          dirs=$(find servers -mindepth 1 -maxdepth 1 -type d -exec test -d "{}/tests" \; -print | sed 's|servers/||' | jq -R . | jq -s .)
+          dirs=$(find servers -mindepth 1 -maxdepth 1 -type d -exec test -d "{}/tests" \; -print | sed 's|servers/||' | jq -R . | jq -cs .)
           echo "Found directories: $dirs"
-          printf "server_dirs=%s\n" "$dirs" >> "$GITHUB_OUTPUT"
+          echo "server_dirs=$dirs" >> "$GITHUB_OUTPUT"
+
 
 
   test:
@@ -66,7 +67,7 @@ jobs:
       labels: linux-ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
