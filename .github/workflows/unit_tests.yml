@@ -49,10 +49,8 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install uv (official install method)
-        run: |
-          curl -LsSf https://astral.sh/uv/install.sh | sh
-          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
 
       - name: Install dependencies with uv
         working-directory: servers/${{ matrix.server-dir }}
@@ -62,7 +60,7 @@ jobs:
 
       - name: Run tests
         working-directory: servers/${{ matrix.server-dir }}
-        run: pytest tests
+        run: uv run pytest tests
   lint:
     runs-on:
       group: databrickslabs-protected-runner-group
