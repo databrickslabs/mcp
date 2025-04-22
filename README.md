@@ -2,10 +2,14 @@
 ![status: Beta](https://img.shields.io/badge/status-Beta-yellow?style=flat-square&logo=databricks)
 
 ## Overview
-An experimental collection of [MCP](https://modelcontextprotocol.io/introduction) servers to help AI agents take common developer actions on Databricks, fetch data from Databricks, etc:
+An experimental collection of [MCP](https://modelcontextprotocol.io/introduction) servers to help AI agents fetch enterprise data from Databricks, automate common developer actions on Databricks, etc:
 
 * [Databricks Unity Catalog server](./servers/unity_catalog/README.md): Fetch data and run tools registered in from Unity Catalog, making agents aware of your enterprise data
 * 🚧 (Work in progress) [Databricks developer tools server](./servers/developer_tools/README.md): Perform common developer actions in Databricks, like creating and updating notebooks, running jobs, etc.
+
+The set of servers in this repo is fluid and will evolve over time. We welcome contributions to this repo, including new servers and new tools for existing servers - please first
+read the [contributor guidelines](CONTRIBUTING.md) to streamline the process and ensure your contribution has the
+best change of being accepted :)
 
 ## Usage
 See the `README.md` in each server's directory for detailed instructions.
