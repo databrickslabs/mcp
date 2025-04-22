@@ -36,11 +36,14 @@ class DummyClient:
             def __init__(self, value, error):
                 self.value = value
                 self.error = error
+
         if "required_parameter" not in parameters:
-            return Result(value=None, error="Missing required parameter 'required_parameter'")
-        return Result(value=f"executed {function_name} with parameters {parameters}", error=None)
-
-
+            return Result(
+                value=None, error="Missing required parameter 'required_parameter'"
+            )
+        return Result(
+            value=f"executed {function_name} with parameters {parameters}", error=None
+        )
 
 
 class DummySettings:

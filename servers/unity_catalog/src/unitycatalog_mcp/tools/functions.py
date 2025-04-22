@@ -27,7 +27,9 @@ class UCFunctionTool(BaseTool):
             function_name=self.uc_function_name, parameters=kwargs
         )
         if res.error:
-            raise Exception(f"Error while executing {self.uc_function_name}: {res.error}")
+            raise Exception(
+                f"Error while executing {self.uc_function_name}: {res.error}"
+            )
         return [
             TextContent(
                 type="text",
