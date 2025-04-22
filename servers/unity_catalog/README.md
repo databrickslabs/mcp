@@ -18,14 +18,14 @@ Genie spaces, as tools.
 {
   "mcpServers": {
     "databricks_unity_catalog": {
-      "command": "uv",
+      "command": "/path/to/uv/executable/uv",
       "args": [
         "--directory",
         "/path/to/this/repo/servers/unity_catalog",
         "-s",
         "prod.genai",
         "-g",
-        "genie_space_name_1,genie_space_name_2"
+        "genie_space_id_1,genie_space_id_2"
       ]
     }
   }
@@ -34,7 +34,7 @@ Genie spaces, as tools.
 
 ## Supported tools
 
-The list of tools supported by this server is dynamically inferred based on the functions and vector search indexes
+The list of tools supported by this server is dynamically inferred at startup time based on the functions and vector search indexes
 within the specified Unity Catalog schema, as well as any specified Genie spaces. In particular, the server exposes
 the following tools:
 
