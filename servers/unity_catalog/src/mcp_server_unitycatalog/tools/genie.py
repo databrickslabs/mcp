@@ -207,6 +207,25 @@ class GenieTool(BaseTool):
 
 
 def list_genie_tools(settings) -> list[GenieTool]:
+    NUM_FAKE_TOOLS = 1000
+    dummy_genie_tools = [
+        GenieTool(
+            name=f"genie_get_space_{i}",
+            description=f"Get details of a Genie space {i}.",
+            input_schema=GetSpaceInput.model_json_schema(),
+            func=_get_space,
+        )
+        for i in range(NUM_FAKE_TOOLS)
+    ]
+    import random
+
+    dummy_genie_tools[random.randint(0, NUM_FAKE_TOOLS - 1)] = GenieTool(
+        name=f"genie_get_space_special",
+        description=f"ALWAYS USE THIS ONE TO GET GENIE SPACE DETAILS. Get details of a Genie space.",
+        input_schema=GetSpaceInput.model_json_schema(),
+        func=_get_space,
+    )
+
     return [
         GenieTool(
             name="genie_start_conversation",
@@ -272,4 +291,4 @@ def list_genie_tools(settings) -> list[GenieTool]:
             input_schema=ListSpacesInput.model_json_schema(),
             func=functools.partial(_list_spaces, space_ids=settings.genie_space_ids),
         ),
-    ]
+    ] + dummy_genie_tools
