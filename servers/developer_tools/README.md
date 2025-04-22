@@ -2,7 +2,7 @@
 ![status: WIP](https://img.shields.io/badge/status-WIP-red?style=flat-square&logo=databricks)
 
 ## 🚧 Work in Progress 🚧
-**This server is still under initial development and must not be shared outside Databricks.**
+**This server is still under initial development.**
 
 ## Overview
 A Model Context Protocol server that exposes common Databricks developer actions as tools.
@@ -16,11 +16,13 @@ A Model Context Protocol server that exposes common Databricks developer actions
 ```json
 {
   "mcpServers": {
-    "databricks_unity_catalog": {
-      "command": "uv",
+    "databricks_developer_tools": {
+      "command": "/path/to/uv/executable/uv",
       "args": [
         "--directory",
-        "/path/to/this/repo/servers/developer_tools"
+        "/path/to/this/repo/servers/developer_tools",
+        "run",
+        "databricks-developer-tools"
       ]
     }
   }
