@@ -1,0 +1,42 @@
+[project]
+name = "mcp-server-unitycatalog"
+version = "0.1.0"
+description = "An MCP (Model Context Protocol) server for retrieving data and executing functions in Unity Catalog."
+readme = "README.md"
+requires-python = ">=3.10"
+keywords = ["unity catalog", "mcp", "agents", "llm", "automation"]
+license = { text = "Databricks License" }
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+]
+dependencies = [
+    "mcp>=1.2.1",
+    "pydantic>=2.10.6",
+    "pydantic-settings>=2.7.1",
+    "unitycatalog-ai>=0.1.0",
+    "databricks-sdk>=0.49.0",
+    "databricks-openai>=0.3.1",
+]
+
+[project.scripts]
+mcp-server-unitycatalog = "mcp_server_unitycatalog:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+dev-dependencies = [
+    "pyright>=1.1.393",
+    "ruff>=0.9.4",
+    "pytest>=8.3.4",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
