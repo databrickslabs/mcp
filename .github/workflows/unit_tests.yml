@@ -4,11 +4,11 @@ on:
   push:
     paths:
       - "servers/**"
-      - ".github/workflows/run-server-tests.yml"
+      - ".github/workflows/unit_tests.yml"
   pull_request:
     paths:
       - "servers/**"
-      - ".github/workflows/run-server-tests.yml"
+      - ".github/workflows/unit_tests.yml"
 
 jobs:
   discover:
