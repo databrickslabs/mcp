@@ -22,8 +22,10 @@ Genie spaces, as tools.
       "args": [
         "--directory",
         "/path/to/this/repo/servers/unity_catalog",
+        "run",
+        "unitycatalog-mcp",
         "-s",
-        "prod.genai",
+        "your_catalog.your_schema",
         "-g",
         "genie_space_id_1,genie_space_id_2"
       ]
