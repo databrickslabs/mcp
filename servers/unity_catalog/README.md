@@ -2,10 +2,10 @@
 ![status: Beta](https://img.shields.io/badge/status-Beta-yellow?style=flat-square&logo=databricks)
 
 ## Overview
-A Model Context Protocol server that exposes data in Unity Catalog (functions, vector search indexes), as well as Unity Catalog-powered 
-Genie spaces, as tools.
+A Model Context Protocol server that exposes structured and unstructured data in Unity Catalog ([vector search indexes](https://docs.databricks.com/gcp/en/generative-ai/vector-search), [functions](https://docs.databricks.com/aws/en/generative-ai/agent-framework/create-custom-tool), and 
+[Genie spaces](https://docs.databricks.com/aws/en/genie/)), as tools.
 
-![Demo image](docs/images/demo.png)
+<img src="docs/images/demo.png" alt="Demo image" height="400px">
 
 ## Usage
 1. Install [uv](https://docs.astral.sh/uv/getting-started/installation/)
