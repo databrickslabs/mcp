@@ -5,7 +5,7 @@ and GitHub Pull Requests for accepting changes.
 
 See [issues](https://github.com/databrickslabs/mcp/issues) with the "help wanted" or "bug" labels for items that we'd especially like help with.
 
-For major new features or changes (e.g. adding a new server, removing tool(s) from an existing server), please file an issue or reach out [via Slack](https://databricks.enterprise.slack.com/archives/C065NC65Q9F) to facilitate initial discussion,
+For major new features or changes (e.g. adding a new server, removing tool(s) from an existing server), please file an issue to facilitate initial discussion,
 before sending a pull request. For smaller changes (e.g. fixing a bug, adding a new tool, improving test coverage), feel free to send a pull request directly.
 
 ### Running tests
