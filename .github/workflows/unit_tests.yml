@@ -1,4 +1,4 @@
-name: Tests and lint for MCP servers
+name: Unit Tests
 
 on:
   push:

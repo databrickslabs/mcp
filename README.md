@@ -1,5 +1,7 @@
 # Databricks MCP servers
 
+![Test Status](https://github.com/databrickslabs/mcp/actions/workflows/unit_tests.yml/badge.svg)
+
 ## Overview
 An experimental collection of [MCP](https://modelcontextprotocol.io/introduction) servers to help AI agents fetch enterprise data from Databricks, automate common developer actions on Databricks, etc:
 
