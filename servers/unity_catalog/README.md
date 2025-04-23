@@ -1,8 +1,5 @@
-# Databricks developer tools MCP server
-![status: WIP](https://img.shields.io/badge/status-WIP-red?style=flat-square&logo=databricks)
-
-## 🚧 Work in Progress 🚧
-**This server is still under initial development and must not be shared outside Databricks.**
+# Databricks Unity Catalog MCP server
+![status: Beta](https://img.shields.io/badge/status-Beta-yellow?style=flat-square&logo=databricks)
 
 ## Overview
 A Model Context Protocol server that exposes data in Unity Catalog (functions, vector search indexes), as well as Unity Catalog-powered 
