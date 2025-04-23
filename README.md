@@ -17,7 +17,7 @@ read the [contributor guidelines](CONTRIBUTING.md) to streamline the process and
 See the `README.md` in each server's directory for detailed instructions.
 For most servers, the following steps work: 
 
-1. Install uv from Astral
+1. Install [uv](https://docs.astral.sh/uv/getting-started/installation/)
 1. Install Python using `uv python install 3.12`
 1. [Configure Databricks credentials](https://docs.databricks.com/aws/en/dev-tools/cli/authentication) with access to the required APIs
 1. Add the server to your MCP client configuration. For example, to use the Databricks Unity Catalog MCP server with Claude Desktop, add the following to your `claude_desktop_config.json`:
