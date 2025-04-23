@@ -1,8 +1,8 @@
 # Databricks developer tools MCP server
-![status: WIP](https://img.shields.io/badge/status-WIP-red?style=flat-square&logo=databricks)
+![status: Under Construction](https://img.shields.io/badge/status-Under_Construction-red?style=flat-square&logo=databricks)
 
 ## 🚧 Work in Progress 🚧
-**This server is still under initial development.**
+**This server is still under initial development and is not yet usable. Contributions are welcome!**
 
 ## Overview
 A Model Context Protocol server that exposes common Databricks developer actions as tools.
