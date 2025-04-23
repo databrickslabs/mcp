@@ -5,6 +5,8 @@
 A Model Context Protocol server that exposes data in Unity Catalog (functions, vector search indexes), as well as Unity Catalog-powered 
 Genie spaces, as tools.
 
+![Demo image](docs/images/demo.png)
+
 ## Usage
 1. Install uv from Astral
 1. Install Python using `uv python install 3.12`
