@@ -7,6 +7,8 @@ A Model Context Protocol server that exposes structured and unstructured data in
 
 <img src="docs/images/demo.png" alt="Demo image" height="400px">
 
+![Demo image](docs/images/demo.png)
+
 ## Usage
 1. Install [uv](https://docs.astral.sh/uv/getting-started/installation/)
 1. Install Python using `uv python install 3.12`
