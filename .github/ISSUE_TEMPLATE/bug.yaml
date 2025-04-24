@@ -1,7 +1,7 @@
 # See https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-issue-forms
 # and https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema
 name: Bug Report
-description: Something is not working in MCP
+description: Something is not working in one or more MCP servers
 title: "[BUG]: "
 labels: ["bug", "needs-triage"]
 body:
@@ -49,7 +49,7 @@ body:
     id: os
     attributes:
       label: Operating System
-      description: Which operating system do you have MCP installed on?
+      description: Which operating system are you running the MCP server(s) on?
       options:
         - macOS
         - Linux
