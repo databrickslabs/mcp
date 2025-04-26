@@ -1,0 +1,7 @@
+[project]
+name = "mcp-server-databricks"
+version = "0.0.1"
+description = "MCP server for Databricks developer tools"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["mcp>=1.0.0", "databricks-sql-connector>=2.4.0", "requests>=2.31.0", "packaging>=23.0"]
