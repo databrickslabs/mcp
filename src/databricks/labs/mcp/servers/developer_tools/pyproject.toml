@@ -1,7 +1,20 @@
 [project]
-name = "mcp-server-databricks"
+name = "developer-tools-mcp"
 version = "0.0.1"
 description = "MCP server for Databricks developer tools"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = ["mcp>=1.0.0", "databricks-sql-connector>=2.4.0", "requests>=2.31.0", "packaging>=23.0"]
+dependencies = [
+    "mcp>=1.0.0", 
+    "databricks-sql-connector>=2.4.0", 
+    "requests>=2.31.0", 
+    "packaging>=23.0",
+    "databricks-sdk"
+]
+
+[project.scripts]
+developer-tools-mcp = "developer_tools_mcp:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
