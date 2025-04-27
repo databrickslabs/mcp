@@ -1,17 +1,15 @@
-FROM python:3.10-slim
+FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy requirements first to leverage Docker cache
-COPY requirements.txt .
+# Copy package configuration and requirements
+COPY ./pyproject.toml ./pyproject.toml
+COPY ./uv.lock ./uv.lock
+COPY ./README.md ./README.md
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-
-
-# Copy the rest of the application code into the container at /app
-COPY . .
+# Copy the package code
+COPY ./src ./src
 
 # Make port 8000 available to the world outside this container
 # (MCP servers typically run on port 8000 by default)
@@ -22,5 +20,5 @@ ENV DATABRICKS_HOST=""
 ENV DATABRICKS_TOKEN=""
 ENV DATABRICKS_HTTP_PATH=""
 
-# Run main.py when the container launches
-CMD ["python", "server.py"]
+# Run the module properly
+CMD ["uv", "run", "developer-tools-mcp"]

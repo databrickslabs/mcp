@@ -448,13 +448,9 @@ def test_databricks_connections() -> str:
         results.append("\n❌ One or more connection tests failed.")
 
     return "\n".join(results) + DATABRICKS_HOST
-
-def main():
-    print("Starting MCP server")
-    test_databricks_connections()
-    # Setup basic logging
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    mcp.run()
+    
 
 if __name__ == "__main__":
-    main()
+    test_databricks_connections()
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    mcp.run()
