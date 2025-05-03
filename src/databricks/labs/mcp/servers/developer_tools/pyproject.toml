@@ -9,7 +9,8 @@ dependencies = [
     "databricks-sql-connector>=2.4.0", 
     "requests>=2.31.0", 
     "packaging>=23.0",
-    "databricks-sdk"
+    "databricks-sdk", 
+    "pyarrow"
 ]
 
 [project.scripts]
