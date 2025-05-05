@@ -13,6 +13,7 @@ Table of Contents
     - [Usage](#usage)
     - [Supported tools](#supported-tools)
   - [Developer Tools Server](#developer-tools-server)
+  - [Deploying the MCP server on Databricks Apps](#deploying-the-mcp-server-on-databricks-apps)
   - [Support](#support)
   - [Contributing](#contributing)
 
@@ -77,6 +78,24 @@ the following tools:
 
 This server is currently under construction. It is not yet usable, but contributions are welcome!
 
+## Deploying the MCP server on Databricks Apps
+
+This server can be deployed on Databricks Apps. To do so, follow the instructions below:
+1. Move into the project directory:
+```bash
+cd /path/to/this/repo
+```
+
+2. Deploy the app:
+```bash
+databricks bundle deploy -p <name-of-your-profile>
+```
+
+3. Run the app:
+```bash
+databricks bundle run mcp-on-apps -p <name-of-your-profile>
+```
+
 ## Support
 Please note that all projects in the `databrickslabs` GitHub organization are provided for your exploration only, and are not formally supported by Databricks with Service Level Agreements (SLAs).  They are provided AS-IS and we do not make any guarantees of any kind.  Please do not submit a support ticket relating to any issues arising from the use of these projects.
 
@@ -86,3 +105,4 @@ Any issues discovered through the use of this project should be filed as GitHub 
 
 We welcome contributions :) - see [CONTRIBUTING.md](./CONTRIBUTING.md) for details. Please make sure to read this guide before 
 submitting pull requests, to ensure your contribution has the best chance of being accepted.
+

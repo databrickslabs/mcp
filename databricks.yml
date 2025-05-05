@@ -1,0 +1,26 @@
+bundle:
+  name: mcp-on-apps
+
+sync:
+  include:
+    - .build
+
+artifacts:
+  default:
+    type: whl
+    path: .
+    build: uv build --wheel
+
+resources:
+  apps:
+    mcp-on-apps:
+      name: "mcp-on-apps"
+      description: "MCP Server on Databricks Apps"
+      source_code_path: ./.build
+      config:
+        command: ["unitycatalog-mcp-app"]
+
+targets:
+  dev:
+    mode: development
+    default: true

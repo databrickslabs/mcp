@@ -24,10 +24,15 @@ dev-dependencies = [
     "ruff>=0.9.4",
     "pytest>=8.3.4",
     "isort>=6.0.1",
+    "hatchling>=1.27.0",
 ]
+
+[tool.hatch.build.hooks.custom]
+path = "hooks/apps_build.py"
 
 [project.scripts]
 unitycatalog-mcp = "databricks.labs.mcp.servers.unity_catalog:main"
+unitycatalog-mcp-app = "databricks.labs.mcp.servers.unity_catalog.app:start_app"
 
 [build-system]
 requires = ["hatchling", "hatch-fancy-pypi-readme", "hatch-vcs"]
