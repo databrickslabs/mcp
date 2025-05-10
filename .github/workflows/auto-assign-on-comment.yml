@@ -18,13 +18,13 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const body = context.payload.comment.body.toLowerCase();
+            const body = context.payload.comment.body.trim();
             const author = context.payload.comment.user.login;
             const issue = context.payload.issue;
 
-            // Check if comment includes 'take'
-            if (!body.includes('take')) {
-              console.log("Comment does not include 'take'; skipping.");
+            // Check if comment is 'take'
+            if (body !== 'take') {
+              console.log("Comment is not exactly 'take'; skipping.");
               return;
             }
 
