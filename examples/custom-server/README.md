@@ -32,7 +32,9 @@ To deploy the server using the `databricks apps` CLI, follow these steps:
 
 Ensure Databricks authentication is configured:
 ```bash
-databricks auth login # Skip specifying a profile name when prompted
+# Skip specifying a profile name when prompted, or add --profile
+# to subsequent commands with the name of the profile you specify here
+databricks auth login
 ```
 
 Create a Databricks app to host your MCP server:
@@ -57,7 +59,7 @@ To deploy the server using the `databricks bundle` CLI, follow these steps
 ```bash
 uv build --wheel
 databricks bundle deploy -p <name-of-your-profile>
-databricks bundle run custom-server -p <name-of-your-profile>
+databricks bundle run custom-mcp-server -p <name-of-your-profile>
 ```
 
 

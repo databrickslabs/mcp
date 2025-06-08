@@ -88,6 +88,7 @@
                                 <pre class="bg-gray-900 p-3 rounded overflow-x-auto">
 <code class="language-python">
 from databricks.sdk import WorkspaceClient
+from databricks_mcp import DatabricksOAuthClientProvider
 from mcp.client.streamable_http import streamablehttp_client as connect
 from mcp import ClientSession
 
@@ -96,9 +97,8 @@ client = WorkspaceClient()
 async def main():
     # Connect to a streamable HTTP server
 
-    headers = client.config.authenticate()
-    app_url = "https://your.app.url.databricksapps.com/api/mcp"
-    async with connect(app_url, headers=headers) as (
+    app_url = "https://your.app.url.databricksapps.com/mcp/"
+    async with connect(app_url, auth=DatabricksOAuthClientProvider(client)) as (
         read_stream,
         write_stream,
         _,
@@ -118,7 +118,7 @@ async def main():
                                 Or use your favourite tool
                             </dt>
                             <dd class="mt-1 text-sm text-gray-100">
-                                You can also connect using tools like <strong>Cloude</strong>, <strong>MCP
+                                You can also connect using tools like <strong>Claude</strong>, <strong>MCP
                                     Inspector</strong>, or any other compatible client.
                             </dd>
                         </div>

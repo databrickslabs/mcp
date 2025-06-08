@@ -14,7 +14,7 @@ artifacts:
 resources:
   apps:
     custom-mcp-server:
-      name: "custom-mcp-server"
+      name: "mcp-custom-server-bundles"
       description: "Custom MCP Server on Databricks Apps"
       source_code_path: ./.build
       config:

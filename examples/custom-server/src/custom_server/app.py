@@ -2,6 +2,9 @@ from pathlib import Path
 from fastapi.staticfiles import StaticFiles
 from mcp.server.fastmcp import FastMCP
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
+
+STATIC_DIR = Path(__file__).parent / "static"
 
 # Create an MCP server
 mcp = FastMCP("Custom MCP Server on Databricks Apps")
@@ -22,14 +25,15 @@ def get_greeting(name: str) -> str:
 
 
 mcp_app = mcp.streamable_http_app()
-static = StaticFiles(directory=Path(__file__).parent / "static", html=True)
 
 
 app = FastAPI(
     lifespan=lambda _: mcp.session_manager.run(),
 )
 
-# note the order of mounting here,
-# and don't change it unless you know what you're doing
+
+@app.get("/", include_in_schema=False)
+async def serve_index():
+    return FileResponse(STATIC_DIR / "index.html")
+
 app.mount("/", mcp_app)
-app.mount("/", static)

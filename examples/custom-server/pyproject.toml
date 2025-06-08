@@ -28,4 +28,4 @@ path = "hooks/apps_build.py"
 
 [project.scripts]
 #custom-server = "databricks.labs.mcp.servers.unity_catalog:main"
-custom-server = "custom_server.app:app"
+custom-server = "custom_server.main:main"
