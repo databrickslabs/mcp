@@ -25,3 +25,7 @@ dev = [
 
 [tool.hatch.build.hooks.custom]
 path = "hooks/apps_build.py"
+
+[project.scripts]
+#custom-server = "databricks.labs.mcp.servers.unity_catalog:main"
+custom-server = "custom_server.app:app"

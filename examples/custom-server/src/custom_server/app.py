@@ -31,5 +31,5 @@ app = FastAPI(
 
 # note the order of mounting here,
 # and don't change it unless you know what you're doing
-app.mount("/api", mcp_app)
+app.mount("/", mcp_app)
 app.mount("/", static)
