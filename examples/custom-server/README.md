@@ -26,16 +26,15 @@ uvicorn custom-server.app:mcp --reload
 
 There are two ways to deploy the server on Databricks Apps: using the `databricks apps` CLI or using the `databricks bundle` CLI. Depending on your preference, you can choose either method.
 
+Both approaches require first configuring Databricks authentication:
+```bash
+export DATABRICKS_CONFIG_PROFILE=<your-profile-name> # e.g. custom-mcp-server
+databricks auth login --profile "$DATABRICKS_CONFIG_PROFILE"
+```
+
 ### Using `databricks apps` CLI
 
 To deploy the server using the `databricks apps` CLI, follow these steps:
-
-Ensure Databricks authentication is configured:
-```bash
-# Skip specifying a profile name when prompted, or add --profile
-# to subsequent commands with the name of the profile you specify here
-databricks auth login
-```
 
 Create a Databricks app to host your MCP server:
 ```bash
@@ -54,20 +53,18 @@ databricks apps deploy mcp-custom-server --source-code-path "/Workspace/Users/$D
 
 To deploy the server using the `databricks bundle` CLI, follow these steps
 
+[//]: # (TODO: would be nice to also be able to use the same uv command to auto-install dependencies and run the app)
+Update the `app.yaml` file in this directory to use the following command:
+```yaml
+command: ["uvicorn", "custom_server.app:app"]
+```
+
 - In this directory, run the following command to deploy and run the MCP server on Databricks Apps:
 
 ```bash
 uv build --wheel
-databricks bundle deploy -p <name-of-your-profile>
-databricks bundle run custom-mcp-server -p <name-of-your-profile>
-```
-
-
-3. Deploy the app using the `databricks apps` CLI:
-```bash
-databricks sync ./build -p <your-profile-name> /Workspace/Users/my-email@org.com/my-app
-databricks apps deploy my-app-name -p <your-profile-name> --source-code-path /Workspace/Users/my-email@org.com/my-app
-databricks apps start my-app-name -p <your-profile-name>
+databricks bundle deploy
+databricks bundle run custom-mcp-server
 ```
 
 ## Connecting to the MCP server

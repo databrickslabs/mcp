@@ -17,8 +17,6 @@ resources:
       name: "mcp-custom-server-bundles"
       description: "Custom MCP Server on Databricks Apps"
       source_code_path: ./.build
-      config:
-        command: ["uvicorn", "custom_server.app:app"]
 
 targets:
   dev:
