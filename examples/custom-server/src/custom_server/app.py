@@ -1,5 +1,4 @@
 from pathlib import Path
-from fastapi.staticfiles import StaticFiles
 from mcp.server.fastmcp import FastMCP
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
@@ -35,5 +34,6 @@ app = FastAPI(
 @app.get("/", include_in_schema=False)
 async def serve_index():
     return FileResponse(STATIC_DIR / "index.html")
+
 
 app.mount("/", mcp_app)
