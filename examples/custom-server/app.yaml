@@ -1,1 +1,1 @@
-command: ["uvicorn", "custom_server.app:app"]
+command: ["uv", "run", "custom-server"]
