@@ -32,6 +32,12 @@ class CliSettings(BaseSettings):
         validation_alias=AliasChoices("g", "genie_space_ids"),
     )
 
+    vector_search_num_results: int = Field(
+        default=5,
+        description="Number of results to return from vector search queries",
+        validation_alias=AliasChoices("vn", "vector_search_num_results", "vector_num_results"),
+    )
+
     def get_catalog_name(self):
         return self.schema_full_name.split(".")[0] if self.schema_full_name else None
 
