@@ -8,10 +8,12 @@ from mcp.types import TextContent, Tool as ToolSpec
 
 # Constant storing vector index content vector column name
 CONTENT_VECTOR_COLUMN_NAME = "__db_content_vector"
+CONTENT_VECTOR_COLUMN_STARTS_WITH= "__db_"
 
 
 class QueryInput(BaseModel):
     query: str
+    num_results: int
 
 
 class VectorSearchTool(BaseTool):
@@ -45,7 +47,7 @@ class VectorSearchTool(BaseTool):
         results = index.similarity_search(
             query_text=model.query,
             columns=self.columns,
-            num_results=self.num_results,
+            num_results=model.num_results,
         )
 
         docs = results.get("result", {}).get("data_array", [])
@@ -58,7 +60,7 @@ def get_table_columns(
 ) -> list[str]:
     table_info = workspace_client.tables.get(full_table_name)
     return [
-        col.name for col in table_info.columns if col.name != CONTENT_VECTOR_COLUMN_NAME
+        col.name for col in table_info.columns if (not col.name.startswith(CONTENT_VECTOR_COLUMN_STARTS_WITH) )  # col.name  != CONTENT_VECTOR_COLUMN_NAME
     ]
 
 
