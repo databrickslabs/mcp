@@ -6,15 +6,13 @@ from databricks.labs.mcp.servers.unity_catalog.tools.base_tool import BaseTool
 from databricks.labs.mcp.servers.unity_catalog.cli import CliSettings
 from mcp.types import TextContent, Tool as ToolSpec
 
-# Constant storing vector index content vector column name
-CONTENT_VECTOR_COLUMN_NAME = "__db_content_vector"
+# Constant to filter vector column and expose by default the otherS columns presented in the index
 CONTENT_VECTOR_COLUMN_STARTS_WITH= "__db_"
+CONTENT_VECTOR_COLUMN_ENDS_WITH= "_vector"
 
 
 class QueryInput(BaseModel):
     query: str
-    num_results: int
-
 
 class VectorSearchTool(BaseTool):
     def __init__(
@@ -47,7 +45,7 @@ class VectorSearchTool(BaseTool):
         results = index.similarity_search(
             query_text=model.query,
             columns=self.columns,
-            num_results=model.num_results,
+            num_results=self.num_results,
         )
 
         docs = results.get("result", {}).get("data_array", [])
@@ -59,8 +57,9 @@ def get_table_columns(
     workspace_client: WorkspaceClient, full_table_name: str
 ) -> list[str]:
     table_info = workspace_client.tables.get(full_table_name)
+
     return [
-        col.name for col in table_info.columns if (not col.name.startswith(CONTENT_VECTOR_COLUMN_STARTS_WITH) )  # col.name  != CONTENT_VECTOR_COLUMN_NAME
+        col.name for col in table_info.columns if not (col.name.startswith(CONTENT_VECTOR_COLUMN_STARTS_WITH) and col.name.endswith(CONTENT_VECTOR_COLUMN_ENDS_WITH) )
     ]
 
 
