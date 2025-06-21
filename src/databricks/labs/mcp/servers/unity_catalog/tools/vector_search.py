@@ -6,8 +6,10 @@ from databricks.labs.mcp.servers.unity_catalog.tools.base_tool import BaseTool
 from databricks.labs.mcp.servers.unity_catalog.cli import CliSettings
 from mcp.types import TextContent, Tool as ToolSpec
 
-# Constant storing vector index content vector column name
-CONTENT_VECTOR_COLUMN_NAME = "__db_content_vector"
+# Constants used to identify vector columns by name.
+# Columns matching both patterns will be excluded; all others will be returned.
+CONTENT_VECTOR_COLUMN_STARTS_WITH = "__db_"
+CONTENT_VECTOR_COLUMN_ENDS_WITH = "_vector"
 
 
 class QueryInput(BaseModel):
@@ -57,8 +59,14 @@ def get_table_columns(
     workspace_client: WorkspaceClient, full_table_name: str
 ) -> list[str]:
     table_info = workspace_client.tables.get(full_table_name)
+
     return [
-        col.name for col in table_info.columns if col.name != CONTENT_VECTOR_COLUMN_NAME
+        col.name
+        for col in table_info.columns
+        if not (
+            col.name.startswith(CONTENT_VECTOR_COLUMN_STARTS_WITH)
+            and col.name.endswith(CONTENT_VECTOR_COLUMN_ENDS_WITH)
+        )
     ]
 
 
