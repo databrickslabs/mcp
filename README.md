@@ -9,6 +9,7 @@ Table of Contents
 - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
   - [Unity Catalog Server](#unity-catalog-server)
+    - [Databricks Managed MCP server](#databricks-managed-mcp-server)
     - [Overview](#overview-1)
     - [Usage (locally via `stdio` transport)](#usage-locally-via-stdio-transport)
     - [Supported tools](#supported-tools)
@@ -21,13 +22,16 @@ Table of Contents
   - [Support](#support)
   - [Contributing](#contributing)
 
+## Databricks Managed MCP server
+Databricks has ready-to-use servers that let agents query data and access tools in Unity Catalog, Vector Search and Genie. Permissions are always enforced, so agents and users can only access the tools and data they’re allowed to. For more info visit [aws](https://docs.databricks.com/aws/en/generative-ai/agent-framework/mcp#managed-mcp-servers)|[azure](https://docs.databricks.com/gcp/en/generative-ai/agent-framework/mcp#compute-pricing)|[gcp](https://docs.databricks.com/gcp/en/generative-ai/agent-framework/mcp#managed-mcp-servers).
+
 ## Overview
 An experimental collection of [MCP](https://modelcontextprotocol.io/introduction) servers to help AI agents fetch enterprise data from Databricks, automate common developer actions on Databricks, etc:
 
 * ![status: Beta](https://img.shields.io/badge/status-Beta-yellow?style=flat-square&logo=databricks)
   [Databricks Unity Catalog server](#unity-catalog-server): Fetch data and run tools registered in from Unity Catalog, making agents aware of your enterprise data
 * ![status: Under construction](https://img.shields.io/badge/status-Under_construction-red?style=flat-square&logo=databricks)
-  [Databricks developer tools server](#developer-tools-server): Perform common developer actions in Databricks, like creating and updating notebooks, running jobs, etc. This server is not yet usable, but contributions are welcome! 
+  [Databricks developer tools server](#developer-tools-server): Perform common developer actions in Databricks, like creating and updating notebooks, running jobs, etc. This server is not yet usable, but contributions are welcome!
   Note: if developing from within the Databricks product (e.g. using Databricks notebooks), we recommend using [Databricks Assistant](https://docs.databricks.com/aws/en/notebooks/databricks-assistant-faq)
 
 The set of servers and tools in this repo is fluid and will evolve over time. We welcome contributions to this repo - please first
@@ -126,7 +130,7 @@ databricks auth token -p your-profile-name
 
 If you are a developer iterating on the server implementation, you can repeat steps #2 and #3 to push your latest modifications to the server to your Databricks app.
 
-Please note that both variables should be provided in both `deploy` and `run` commands. The `schema_full_name` variable is used to determine the schema to use for the server, while the `genie_space_ids` variable is used to determine which Genie spaces to use. 
+Please note that both variables should be provided in both `deploy` and `run` commands. The `schema_full_name` variable is used to determine the schema to use for the server, while the `genie_space_ids` variable is used to determine which Genie spaces to use.
 
 #### Using `databricks apps` CLI
 
@@ -188,6 +192,6 @@ Any issues discovered through the use of this project should be filed as GitHub 
 
 ## Contributing
 
-We welcome contributions :) - see [CONTRIBUTING.md](./CONTRIBUTING.md) for details. Please make sure to read this guide before 
+We welcome contributions :) - see [CONTRIBUTING.md](./CONTRIBUTING.md) for details. Please make sure to read this guide before
 submitting pull requests, to ensure your contribution has the best chance of being accepted.
 
