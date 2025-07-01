@@ -9,7 +9,7 @@ Table of Contents
 - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
   - [Unity Catalog Server](#unity-catalog-server)
-    - [Databricks Managed MCP server](#databricks-managed-mcp-servers)
+    - [Databricks Managed MCP servers](#databricks-managed-mcp-servers)
     - [Overview](#overview-1)
     - [Usage (locally via `stdio` transport)](#usage-locally-via-stdio-transport)
     - [Supported tools](#supported-tools)
