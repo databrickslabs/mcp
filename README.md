@@ -9,7 +9,7 @@ Table of Contents
 - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
   - [Unity Catalog Server](#unity-catalog-server)
-    - [Databricks Managed MCP server](#databricks-managed-mcp-server)
+    - [Databricks Managed MCP server](#databricks-managed-mcp-servers)
     - [Overview](#overview-1)
     - [Usage (locally via `stdio` transport)](#usage-locally-via-stdio-transport)
     - [Supported tools](#supported-tools)
@@ -22,14 +22,14 @@ Table of Contents
   - [Support](#support)
   - [Contributing](#contributing)
 
-## Databricks Managed MCP server
-Databricks has ready-to-use servers that let agents query data and access tools in Unity Catalog, Vector Search and Genie. Permissions are always enforced, so agents and users can only access the tools and data they’re allowed to. For more info visit [aws](https://docs.databricks.com/aws/en/generative-ai/agent-framework/mcp#managed-mcp-servers)|[azure](https://docs.databricks.com/gcp/en/generative-ai/agent-framework/mcp#compute-pricing)|[gcp](https://docs.databricks.com/gcp/en/generative-ai/agent-framework/mcp#managed-mcp-servers).
+## Databricks Managed MCP servers
+Databricks provides ready-to-use MCP servers that let agents query data and access tools in Unity Catalog. Permissions are always enforced, so agents and users can only access the tools and data they’re allowed to. For more info see the Databricks docs [AWS](https://docs.databricks.com/aws/en/generative-ai/agent-framework/mcp#managed-mcp-servers)|[Azure](https://docs.databricks.com/gcp/en/generative-ai/agent-framework/mcp#compute-pricing)|[GCP](https://docs.databricks.com/gcp/en/generative-ai/agent-framework/mcp#managed-mcp-servers).
 
 ## Overview
 An experimental collection of [MCP](https://modelcontextprotocol.io/introduction) servers to help AI agents fetch enterprise data from Databricks, automate common developer actions on Databricks, etc:
 
-* ![status: Beta](https://img.shields.io/badge/status-Beta-yellow?style=flat-square&logo=databricks)
-  [Databricks Unity Catalog server](#unity-catalog-server): Fetch data and run tools registered in from Unity Catalog, making agents aware of your enterprise data
+* ![status: Deprecated](https://img.shields.io/badge/status-Beta-yellow?style=flat-square&logo=databricks)
+  [Databricks Unity Catalog server](#unity-catalog-server): Fetch data and run tools registered in from Unity Catalog, making agents aware of your enterprise data. Note: this server is deprecated; Databricks recomemnds using [Managed MCP servers](#databricks-managed-mcp-servers) instead
 * ![status: Under construction](https://img.shields.io/badge/status-Under_construction-red?style=flat-square&logo=databricks)
   [Databricks developer tools server](#developer-tools-server): Perform common developer actions in Databricks, like creating and updating notebooks, running jobs, etc. This server is not yet usable, but contributions are welcome!
   Note: if developing from within the Databricks product (e.g. using Databricks notebooks), we recommend using [Databricks Assistant](https://docs.databricks.com/aws/en/notebooks/databricks-assistant-faq)
