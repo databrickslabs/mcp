@@ -83,6 +83,7 @@ the following tools:
 * **UC Functions**: for each UC function, the server exposes a tool with the same name, arguments, and return type as the function
 * **Vector search indexes**: for each vector search index, the server exposes a tool for querying that vector search index
 * **Genie spaces**: for each Genie space, the server exposes tools for managing conversations and sending questions to the space
+* **Tables**: the server exposes tools to list catalogs, schemas, tables and get table details, such as the table schema and table properties
 
 ### Deploying UC MCP server on Databricks Apps
 

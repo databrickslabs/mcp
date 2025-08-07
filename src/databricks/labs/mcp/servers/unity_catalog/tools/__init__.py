@@ -9,6 +9,7 @@ from mcp.types import (
 
 from databricks.labs.mcp._version import __version__ as VERSION
 from databricks.labs.mcp.servers.unity_catalog.cli import get_settings
+from databricks.labs.mcp.servers.unity_catalog.tools.base_tool import BaseTool
 from databricks.labs.mcp.servers.unity_catalog.tools.genie import (
     GenieTool,
     list_genie_tools,
@@ -21,15 +22,19 @@ from databricks.labs.mcp.servers.unity_catalog.tools.vector_search import (
     VectorSearchTool,
     list_vector_search_tools,
 )
+from databricks.labs.mcp.servers.unity_catalog.tools.tables import (
+    TableBaseTool,
+    list_table_tools,
+)
 from databricks.labs.mcp.utils import logger
 
 Content: TypeAlias = Union[TextContent, ImageContent, EmbeddedResource]
-AvailableTool = UCFunctionTool | VectorSearchTool | GenieTool
+AvailableTool = UCFunctionTool | VectorSearchTool | GenieTool | BaseTool | TableBaseTool
 
 
 def list_all_tools(settings) -> list[AvailableTool]:
     """
-    Returns a list of all available tools, including Genie tools, UC functions, and vector search tools.
+    Returns a list of all available tools, including Genie tools, UC functions, vector search tools, and metadata tools.
     This function aggregates tools from different sources and returns them in a single list.
     """
 
@@ -37,6 +42,7 @@ def list_all_tools(settings) -> list[AvailableTool]:
         list_genie_tools(settings)
         + list_vector_search_tools(settings)
         + list_uc_function_tools(settings)
+        + list_table_tools(settings)
     )
 
 
