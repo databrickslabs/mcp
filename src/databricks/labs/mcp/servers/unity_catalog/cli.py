@@ -1,11 +1,7 @@
-from typing import List, Optional
-from pydantic import field_validator
 from functools import lru_cache
-from pydantic import (
-    Field,
-    AliasChoices,
-    model_validator,
-)
+from typing import List, Optional
+
+from pydantic import AliasChoices, Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -40,6 +36,12 @@ class CliSettings(BaseSettings):
         ),
     )
 
+    enable_lakeview: bool = Field(
+        default=True,
+        description="Enable Lakeview dashboard management tools.",
+        validation_alias=AliasChoices("lv", "enable_lakeview"),
+    )
+
     def get_catalog_name(self):
         return self.schema_full_name.split(".")[0] if self.schema_full_name else None
 
@@ -55,9 +57,13 @@ class CliSettings(BaseSettings):
 
     @model_validator(mode="after")
     def check_schema_name_or_genie_space_ids(self):
-        if not self.schema_full_name and not self.genie_space_ids:
+        if (
+            not self.schema_full_name
+            and not self.genie_space_ids
+            and not self.enable_lakeview
+        ):
             raise ValueError(
-                "At least one of --schema (-s) or --genie-space-ids (-g) must be provided."
+                "At least one of --schema (-s), --genie-space-ids (-g), or --enable-lakeview must be provided."
             )
         return self
 

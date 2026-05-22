@@ -1,21 +1,22 @@
 import collections
 from typing import TypeAlias, Union
+
 from mcp.server.fastmcp import FastMCP
-from mcp.types import (
-    TextContent,
-    ImageContent,
-    EmbeddedResource,
-)
+from mcp.types import EmbeddedResource, ImageContent, TextContent
 
 from databricks.labs.mcp._version import __version__ as VERSION
 from databricks.labs.mcp.servers.unity_catalog.cli import get_settings
+from databricks.labs.mcp.servers.unity_catalog.tools.functions import (
+    UCFunctionTool,
+    list_uc_function_tools,
+)
 from databricks.labs.mcp.servers.unity_catalog.tools.genie import (
     GenieTool,
     list_genie_tools,
 )
-from databricks.labs.mcp.servers.unity_catalog.tools.functions import (
-    UCFunctionTool,
-    list_uc_function_tools,
+from databricks.labs.mcp.servers.unity_catalog.tools.lakeview import (
+    LakeviewTool,
+    list_lakeview_tools,
 )
 from databricks.labs.mcp.servers.unity_catalog.tools.vector_search import (
     VectorSearchTool,
@@ -24,20 +25,21 @@ from databricks.labs.mcp.servers.unity_catalog.tools.vector_search import (
 from databricks.labs.mcp.utils import logger
 
 Content: TypeAlias = Union[TextContent, ImageContent, EmbeddedResource]
-AvailableTool = UCFunctionTool | VectorSearchTool | GenieTool
+AvailableTool = UCFunctionTool | VectorSearchTool | GenieTool | LakeviewTool
 
 
 def list_all_tools(settings) -> list[AvailableTool]:
     """
-    Returns a list of all available tools, including Genie tools, UC functions, and vector search tools.
+    Returns a list of all available tools, including Genie, Lakeview, UC functions, and vector search tools.
     This function aggregates tools from different sources and returns them in a single list.
     """
-
-    return (
-        list_genie_tools(settings)
-        + list_vector_search_tools(settings)
-        + list_uc_function_tools(settings)
-    )
+    tools = []
+    tools += list_genie_tools(settings)
+    if getattr(settings, "enable_lakeview", True):
+        tools += list_lakeview_tools(settings)
+    tools += list_vector_search_tools(settings)
+    tools += list_uc_function_tools(settings)
+    return tools
 
 
 def _warn_if_duplicate_tool_names(tools: list[AvailableTool]):
