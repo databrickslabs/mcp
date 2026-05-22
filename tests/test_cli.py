@@ -1,7 +1,9 @@
 import sys
+from unittest.mock import patch
+
 import pytest
 from pydantic import ValidationError
-from unittest.mock import patch
+
 from databricks.labs.mcp.servers.unity_catalog.cli import get_settings
 
 
@@ -37,14 +39,8 @@ def test_arguments(catalog: str, schema: str) -> None:
         assert settings.get_schema_name() == schema
 
 
-@pytest.mark.parametrize(
-    "argv",
-    [
-        ["unitycatalog-mcp"],  # neither -s nor -g
-        ["unitycatalog-mcp", "-s", "schema_no_catalog"],
-    ],
-)
-def test_required_arguments(argv) -> None:
+def test_required_arguments_invalid_schema() -> None:
+    argv = ["unitycatalog-mcp", "-s", "schema_no_catalog"]
     with patch.object(sys, "argv", argv):
         with pytest.raises(ValidationError) as exc_info:
             get_settings()
@@ -53,6 +49,26 @@ def test_required_arguments(argv) -> None:
         assert any(
             err["type"] in ("missing", "string_type", "value_error") for err in errors
         )
+
+
+def test_required_arguments_all_disabled() -> None:
+    from databricks.labs.mcp.servers.unity_catalog.cli import CliSettings
+
+    with pytest.raises(ValidationError):
+        CliSettings(
+            schema_full_name=None,
+            genie_space_ids=[],
+            enable_lakeview=False,
+            _env_file=None,
+            _cli_parse_args=False,
+        )
+
+
+def test_lakeview_enabled_by_default() -> None:
+    argv = ["unitycatalog-mcp"]
+    with patch.object(sys, "argv", argv):
+        settings = get_settings()
+        assert settings.enable_lakeview is True
 
 
 @pytest.mark.parametrize(
